@@ -7,6 +7,8 @@ export const zPerson = ({ image }: SchemaContext) =>
     name: z.string(),
     avatar: image().optional(),
     job: z.string().optional(),
+    clubRole: z.string().optional(),
+    isBoardMember: z.boolean().optional(),
     socials: z
       .array(
         z.object({
@@ -14,17 +16,5 @@ export const zPerson = ({ image }: SchemaContext) =>
           href: z.string().url(),
         }),
       )
-      .optional(),
-    company: z
-      .object({
-        title: z.string(),
-        href: z.string().url().optional(),
-      })
-      .optional(),
-    forkit: z
-      .object({
-        role: z.enum(["founder", "organizer", "volunteer"]),
-        avatar: image().optional(),
-      })
       .optional(),
   });

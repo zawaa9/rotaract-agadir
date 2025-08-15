@@ -13,8 +13,8 @@
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 65 100% 53%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 334 84% 45%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
@@ -28,8 +28,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --warning: 45 84.2% 60.2%;
-    --warning-foreground: 45 0% 98%;
+    --warning: 38 93% 54%;
+    --warning-foreground: 0 0% 0%;
 
     --border: 0 0% 9%;
     --input: 0 0% 89.8%;
@@ -40,8 +40,8 @@
 }
 
 @layer utilities {
-  .forkit-image-mask {
-    mask-image: url("/forkit-small.png");
+  .wheel-mask {
+    mask-image: url("/wheel.png");
     mask-repeat: no-repeat;
     mask-size: contain;
     mask-position: center;

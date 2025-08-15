@@ -1,0 +1,37 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
+import GalleryGrid from "@/components/GalleryGrid/index.astro";
+import SEO from "@/components/SEO/index.astro";
+import { Schema } from "astro-seo-schema";
+import defaultImage from "@/assets/images/events.jpg";
+---
+
+<MainLayout>
+  <SEO
+    slot="seo"
+    title="Gallery - Rotaract Agadir Atlantique"
+    description="Explore our collection of photos from events, meetups, and community activities. See the vibrant moments that make our community special."
+  />
+  <Schema
+    slot="ld+json"
+    item={{
+      "@type": "WebPage",
+      "@context": "https://schema.org",
+      name: "Gallery - Rotaract Agadir Atlantique",
+      description:
+        "Photo gallery showcasing events, meetups, and community activities",
+      url: "https://rotaractagadir.com/gallery",
+    }}
+  />
+
+  <!-- HERO -->
+  <ImageBackgroundHero
+    src={defaultImage}
+    alt="Gallery hero image showing community events"
+    blur
+  />
+
+  <!-- GALLERY GRID -->
+  <GalleryGrid />
+</MainLayout>

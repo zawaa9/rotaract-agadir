@@ -51,7 +51,7 @@ export const EventMessage = (props: Props) => {
             ) : (
               <p>{message}</p>
             )}
-            <div className="mt-2">The Fork it! Team</div>
+            <div className="mt-2">Rotaract Agadir Atlantique Team</div>
           </AlertDescription>
         )}
       </Alert>

@@ -1,15 +1,5 @@
 import type { FC, ReactNode } from "react";
-import {
-  MdHomeFilled,
-  MdEvent,
-  MdInfo,
-  MdFeed,
-  MdPodcasts,
-  MdBadge,
-  // MdBadge,
-  // MdHandshake,
-  // MdLocalActivity,
-} from "react-icons/md";
+import { MdHomeFilled, MdInfo, MdPeople, MdImage } from "react-icons/md";
 
 type MainMenuScope = "all" | "mobile" | "desktop";
 type MainMenuLevel = "primary" | "secondary";
@@ -31,53 +21,25 @@ const MAIN_MENU: Array<{
     level: "primary",
   },
   {
-    label: "Events",
-    href: "/events",
-    icon: MdEvent,
+    label: "Gallery",
+    href: "/gallery",
+    icon: MdImage,
     scope: "all",
     level: "primary",
   },
   {
-    label: "Podcasts",
-    href: "/podcasts",
-    icon: MdPodcasts,
+    label: "Team",
+    href: "/team",
+    icon: MdPeople,
     scope: "all",
     level: "primary",
   },
   {
-    label: "News",
-    href: "/news",
-    icon: MdFeed,
-    scope: "all",
-    level: "primary",
-  },
-  {
-    label: "Community members",
-    href: "/people",
-    icon: MdBadge,
-    scope: "all",
-    level: "secondary",
-  },
-  // {
-  //   label: "Partners",
-  //   href: "/partners",
-  //   icon: MdHandshake,
-  //   scope: "all",
-  //   level: "secondary",
-  // },
-  // {
-  //   label: "Organize an event",
-  //   href: "/organize-event",
-  //   icon: MdLocalActivity,
-  //   scope: "all",
-  //   level: "secondary",
-  // },
-  {
-    label: "About Fork it!",
+    label: "About Us",
     href: "/about",
     icon: MdInfo,
     scope: "all",
-    level: "secondary",
+    level: "primary",
   },
 ];
 

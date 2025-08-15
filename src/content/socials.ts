@@ -1,16 +1,8 @@
-import { IconLuma } from "@/components/CustomIcons/IconLuma";
+import { IconRotary } from "@/components/CustomIcons/IconRotary";
+import { IconDirIddik } from "@/components/CustomIcons/IconDirIddik";
 import type { SocialType } from "@/schemas/utils";
 import type { FC } from "react";
-import {
-  FaBluesky,
-  FaDiscord,
-  FaGithub,
-  FaInstagram,
-  FaLinkedin,
-  FaXTwitter,
-  FaYoutube,
-  FaFacebook,
-} from "react-icons/fa6";
+import { FaEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa6";
 
 type SocialsLevel = "primary" | "secondary";
 
@@ -21,46 +13,34 @@ const SOCIALS: Array<{
   level: SocialsLevel;
 }> = [
   {
-    label: "Lu.ma",
-    href: "https://lu.ma/forkit.community",
-    icon: IconLuma,
+    label: "Instagram",
+    href: "https://www.instagram.com/rotaractagadir/",
+    icon: FaInstagram,
     level: "primary",
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/company/fork-it-community",
+    href: "https://www.linkedin.com/company/rotaract-agadir/",
     icon: FaLinkedin,
     level: "primary",
   },
   {
-    label: "BlueSky",
-    href: "https://bsky.app/profile/forkit.community",
-    icon: FaBluesky,
+    label: "Rotary",
+    href: "https://my.rotary.org/en/club/23c4b3ec-a9c5-42c4-9e13-e50b486fd7c3/details",
+    icon: IconRotary,
     level: "primary",
   },
   {
-    label: "X Twitter",
-    href: "https://twitter.com/ForkitCommunity",
-    icon: FaXTwitter,
+    label: "Dir Iddik",
+    href: "https://diriddik.ma/fr/associations/rotaract-agadir-atlantique",
+    icon: IconDirIddik,
     level: "primary",
   },
   {
-    label: "Youtube",
-    href: "https://www.youtube.com/channel/UCgV5zuiFWCMl7IvuZ5KbJOw",
-    icon: FaYoutube,
+    label: "E-mail",
+    href: "mailto:contact@rotaractagadir.com",
+    icon: FaEnvelope,
     level: "primary",
-  },
-  {
-    label: "Discord",
-    href: "https://discord.gg/MEJ6TfJC2H",
-    icon: FaDiscord,
-    level: "secondary",
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/Fork-It-Community",
-    icon: FaGithub,
-    level: "secondary",
   },
 ];
 
@@ -70,10 +50,12 @@ export function getSocialsItems(level?: SocialsLevel) {
 }
 
 export const SOCIALS_TYPE_MAP = {
-  bluesky: FaBluesky,
-  github: FaGithub,
   instagram: FaInstagram,
   linkedin: FaLinkedin,
-  x: FaXTwitter,
-  facebook: FaFacebook,
+  // Keep other mappings available for existing content types
+  // without rendering them in the site-wide socials list.
+  x: (() => null) as unknown as FC,
+  github: (() => null) as unknown as FC,
+  bluesky: (() => null) as unknown as FC,
+  facebook: (() => null) as unknown as FC,
 } satisfies Record<SocialType, FC>;

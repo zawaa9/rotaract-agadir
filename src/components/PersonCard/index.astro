@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpeg";
+import SpeakerPlaceholder from "@/assets/images/people-placeholder.jpg";
 import { type CollectionEntry } from "astro:content";
 
 interface Props {
@@ -14,7 +14,7 @@ const { person, id } = Astro.props;
 <a
   id={id}
   class="group flex scroll-mt-20 flex-col gap-5 rounded-lg bg-white/5 p-6 backdrop-blur-md"
-  href={`/people/${id}`}
+  href={`/team/${id}`}
 >
   <div class="flex items-start gap-4">
     <div class="aspect-square size-24 flex-none overflow-hidden rounded-lg">
@@ -27,9 +27,9 @@ const { person, id } = Astro.props;
     </div>
     <div class="flex flex-col gap-3">
       {
-        person.data.forkit?.role === "founder" && (
+        person.data.clubRole && (
           <span class="w-fit rounded bg-primary px-1.5 py-1 text-2xs font-bold uppercase leading-none text-black transition">
-            Fork It! Founder
+            {person.data.clubRole}
           </span>
         )
       }
@@ -49,11 +49,6 @@ const { person, id } = Astro.props;
         }
         <slot />
       </div>
-      {
-        !!person.data.company && (
-          <p class="text-xs opacity-60">{person.data.company.title}</p>
-        )
-      }
     </div>
   </div>
 </a>

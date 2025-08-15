@@ -138,9 +138,7 @@ function getTwitterShareUrl(params: {
   message?: string | undefined;
 }) {
   const encodedUrl = encodeURI(params.url);
-  const encodedMessage = encodeURIComponent(
-    params.message?.replace("Fork it!", "@ForkitCommunity") ?? "",
-  );
+  const encodedMessage = encodeURIComponent(params.message ?? "");
   return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedMessage}`;
 }
 
@@ -149,9 +147,7 @@ function getBlueskyShareUrl(params: {
   message?: string | undefined;
 }) {
   const encodedUrl = encodeURI(params.url);
-  const encodedMessage = encodeURIComponent(
-    params.message?.replace("Fork it!", "@forkit.community") ?? "",
-  );
+  const encodedMessage = encodeURIComponent(params.message ?? "");
   return `https://bsky.app/intent/compose?text=${encodedMessage}%20${encodedUrl}`;
 }
 

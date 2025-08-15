@@ -1,17 +1,15 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import ImageBackgroundHero from "@/components/ImageBackgroundHero/index.astro";
-import NewsCard from "@/components/NewsCard/index.astro";
 import {
   getEventDisplayDate,
   getEventDisplayType,
   getUpcomingMajorEvent,
 } from "@/lib/events";
-import { getPodcastsEpisodesCollection } from "@/lib/podcasts";
 import { Image } from "astro:assets";
-import defaultImage from "@/assets/images/events.jpeg";
-import aboutBackground from "@/assets/images/about.jpg";
-import { MdArrowForward, MdEvent, MdFeed, MdPodcasts } from "react-icons/md";
+import defaultImage from "@/assets/images/events.jpg";
+import aboutBackground from "@/assets/images/about.png";
+import { MdArrowForward, MdEvent, MdPhotoLibrary } from "react-icons/md";
 import { cn } from "@/lib/utils-client";
 import { buttonVariants } from "@/components/ui/button";
 import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
@@ -23,9 +21,15 @@ import { HOME_CONFIG } from "@/content/home";
 import { getEntries } from "astro:content";
 import PartnersBlock from "@/components/PartnersBlock/index.astro";
 import { Schema } from "astro-seo-schema";
-import { getEntry } from "astro:content";
-import { getNewsCollection } from "@/lib/news";
 import TiltedCard from "@/components/TiltedCard";
+
+// Import gallery images for highlights
+import image01 from "@/assets/gallery/image-01.jpg";
+import image07 from "@/assets/gallery/image-07.jpg";
+import image03 from "@/assets/gallery/image-03.jpg";
+import image04 from "@/assets/gallery/image-04.jpg";
+import image05 from "@/assets/gallery/image-05.jpg";
+import image06 from "@/assets/gallery/image-06.jpg";
 
 const upcomingMajorEvent = await getUpcomingMajorEvent();
 const upcomingEvents = (await getUpcomingEvents())
@@ -34,18 +38,23 @@ const upcomingEvents = (await getUpcomingEvents())
       event.id !== upcomingMajorEvent?.id && event.data.status !== "cancelled",
   )
   .slice(0, 3);
-const podcasts = (
-  await getPodcastsEpisodesCollection({ limit: 5 })
-).toReversed();
-const news = await getNewsCollection({ limit: 3 });
+
+// Gallery highlights - select 6 diverse images
+const galleryHighlights = [
+  { src: image01, alt: "Community event highlights" },
+  { src: image07, alt: "Leadership development activities" },
+  { src: image03, alt: "Service projects and initiatives" },
+  { src: image04, alt: "Team building and collaboration" },
+  { src: image05, alt: "Community engagement moments" },
+  { src: image06, alt: "Rotaract spirit in action" },
+];
+
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
     collection: "partners",
     id: partner,
   })),
 );
-const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
-  .afterEventContent?.afterMovie;
 ---
 
 <MainLayout>
@@ -55,7 +64,7 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
     item={{
       "@type": "WebSite",
       "@context": "https://schema.org",
-      name: "Fork it! Community",
+      name: "Rotaract Agadir Atlantique",
     }}
   />
   <!-- HERO -->
@@ -73,16 +82,17 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
           <h1
             class="-mx-[2px] text-balance text-center font-heading text-4xl font-medium uppercase 2xs:text-5xl xs:text-6xl sm:text-left sm:text-5xl xl:text-6xl"
           >
-            Global<br /> Developer<br />
-            <span class="text-primary">Community</span>
+            Rotaract<br /> Agadir<br />
+            <span class="text-primary">Atlantique</span>
           </h1>
           {
             !upcomingMajorEvent && (
               <p class="text-balance text-center sm:text-left">
-                <strong> Fork it! Community’s</strong>{" "}
+                <strong>Rotaract Agadir Atlantique</strong>
                 <span class="opacity-60">
-                  mission is to share computer science knowledge through
-                  worldwide events.
+                  {" "}
+                  is a youth-led service club in Agadir, Morocco, dedicated to
+                  community service, leadership, and personal development.
                 </span>
               </p>
             )
@@ -95,11 +105,11 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
             !upcomingMajorEvent && (
               <div class="flex w-full items-center justify-center sm:justify-start">
                 <a
-                  href="/events"
-                  title="All the events page"
+                  href="/about"
+                  title="About page"
                   class={cn(buttonVariants(), "gap-2 sm:max-w-56")}
                 >
-                  Discover all events
+                  Read more about us
                   <MdArrowForward className="group-hover:translate-x-1 transition" />
                 </a>
               </div>
@@ -190,11 +200,9 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
         </div>
       </div>
 
-      <div
-        class="forkit-image-mask relative -mx-6 flex-[1.5] max-sm:hidden sm:mx-0"
-      >
+      <div class="wheel-mask relative -mx-6 flex-[1.5] max-sm:hidden sm:mx-0">
         <Image
-          class="aspect-[3/2] w-full bg-background object-cover text-white/40"
+          class="aspect-[3/2] w-full bg-background object-cover text-white/60"
           src={upcomingMajorEvent?.data?.image?.media ?? defaultImage}
           alt={upcomingMajorEvent?.data?.image?.alt ??
             "Speaker giving a tech talk in from of attendees"}
@@ -211,68 +219,20 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
   </div>
 
   <div class="flex flex-col pb-24 pt-16 md:py-32 md:pt-12">
-    <!-- NEWS -->
-    {
-      !!news.length && (
-        <div class="flex flex-col py-6 md:py-12">
-          <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
-            <a href="/news" title="All the podcasts">
-              <h2 class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide">
-                <MdFeed className="opacity-40" />
-                News
-              </h2>
-            </a>
-            <p class="bold max-w-[80ch] text-balance text-sm opacity-60">
-              Latest news about the global developer community.
-            </p>
-          </div>
-
-          <div class="mx-auto flex w-full flex-col gap-2">
-            <div class="hide-scrollbar overflow-auto">
-              <div class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6">
-                {news.map((article) => (
-                  <TiltedCard client:visible>
-                    <NewsCard
-                      newsItem={article}
-                      class="w-[30rem] max-w-[80vw]"
-                    />
-                  </TiltedCard>
-                ))}
-                {news.length < 2 && (
-                  <div class="relative flex w-[30rem] max-w-[80vw] flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50">
-                    Coming soon
-                  </div>
-                )}
-                <a
-                  href="/news"
-                  class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
-                >
-                  All news
-                  <MdArrowForward />
-                </a>
-                <div class="w-16 flex-none" />
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    }
-
-    <!-- PODCASTS -->
+    <!-- GALLERY HIGHLIGHTS -->
     <div class="flex flex-col py-6 md:py-12">
       <div class="mx-auto flex w-full max-w-screen-lg flex-col gap-2 px-6">
-        <a href="/podcasts" title="All the podcasts">
+        <a href="/gallery" title="All gallery">
           <h2
             class="flex items-center gap-2 text-balance font-heading text-3xl font-medium uppercase tracking-wide"
           >
-            <MdPodcasts className="opacity-40" />
-            Podcasts
+            <MdPhotoLibrary className="opacity-40" />
+            Gallery Highlights
           </h2>
         </a>
         <p class="bold max-w-[80ch] text-balance text-sm opacity-60">
-          Latest episodes about the global developer community. Listen to
-          different podcasts in different languages. Learn from people around
-          the world.
+          Capturing the vibrant moments and memories from our community events
+          and activities.
         </p>
       </div>
 
@@ -282,36 +242,28 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
             class="mx-auto flex w-full max-w-screen-lg gap-4 px-6 py-8 md:gap-6"
           >
             {
-              podcasts.map((episode) => (
+              galleryHighlights.map((image, _) => (
                 <TiltedCard client:visible>
-                  <a
-                    href={`/podcasts/${episode.id}`}
-                    class="group relative block size-48 md:size-64"
-                    title={episode.data.title}
-                  >
-                    <Image
-                      src={episode.data.cover}
-                      alt={episode.data.title}
-                      class="absolute inset-0 h-full w-full rounded-md object-cover transition duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl"
-                      width={384}
-                      height={384}
-                    />
-                  </a>
+                  <div class="group relative w-[30rem] max-w-[80vw] overflow-hidden rounded-lg bg-background transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+                    <div class="relative aspect-square overflow-hidden">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        width={400}
+                        height={400}
+                      />
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    </div>
+                  </div>
                 </TiltedCard>
               ))
             }
-            {
-              podcasts.length < 2 && (
-                <div class="relative flex size-48 flex-none items-center justify-center rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50 md:size-64">
-                  Coming soon
-                </div>
-              )
-            }
             <a
-              href="/podcasts"
-              class="relative flex w-48 flex-none items-center justify-center gap-2 rounded-md bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10 md:w-64"
+              href="/gallery"
+              class="relative flex aspect-square w-64 flex-none items-center justify-center gap-2 rounded-lg bg-white/5 text-xs uppercase tracking-widest text-white/50 transition duration-500 hover:bg-white/10"
             >
-              All podcasts
+              All Moments
               <MdArrowForward />
             </a>
             <div class="w-16 flex-none"></div>
@@ -348,11 +300,12 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
         <h2
           class="text-balance font-heading text-3xl font-medium uppercase tracking-wide"
         >
-          What is Fork&nbsp;it! Community?
+          About Rotaract Agadir Atlantique
         </h2>
         <p class="bold max-w-[50ch] text-balance text-sm opacity-60">
-          Fork it! is a global tech community where real people share honest
-          feedback, real-life experiences, and authentic stories.
+          Rotaract Agadir Atlantique unites young professionals and students to
+          lead impactful community projects, develop leadership, and foster
+          international understanding.
         </p>
 
         <a
@@ -360,25 +313,36 @@ const afterMovie = (await getEntry("events", "2024-france-rouen"))?.data
           title="About page"
           class={cn(buttonVariants(), "group gap-2 xs:max-w-44 mt-4")}
         >
-          About Fork it!
+          Learn more
           <MdArrowForward className="transition group-hover:translate-x-1" />
         </a>
       </div>
-      {
-        afterMovie && (
-          <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
-            <a href={afterMovie.href} target="_blank" rel="noreferrer">
-              <Image
-                alt={afterMovie.thumbnail.alt}
-                class="rounded-lg object-cover"
-                src={afterMovie.thumbnail.image}
-                width={1134}
-                height={640}
-              />
-            </a>
-          </div>
-        )
-      }
+
+      <div class="relative aspect-[1134/640] w-full min-w-0 flex-1">
+        <a
+          href="https://www.instagram.com/p/DLsgooLIYzP"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <a
+            href="https://www.instagram.com/p/DLsgooLIYzP"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="See our 2025 Vision on Instagram"
+            class="focus:ring-pink-500 group block transition-shadow hover:shadow-2xl focus:outline-none focus:ring-2"
+          >
+            <Image
+              alt="Rotaract Agadir Atlantique 2025 Vision"
+              class="rounded-lg object-cover transition-transform duration-200 group-hover:scale-105"
+              src="/2025-vision.jpeg"
+              width={400}
+              height={300}
+              style="max-height: 300px; width: 100%; object-fit: cover;"
+            />
+          </a>
+        </a>
+      </div>
+      )
     </div>
   </div>
 

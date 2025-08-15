@@ -16,7 +16,7 @@ interface Props
 
 const {
   title,
-  description = "Fork it! Community’s mission is to share computer science knowledge through worldwide events.",
+  description = "Rotaract Agadir Atlantique is a youth-led service club in Agadir, Morocco, dedicated to community service, leadership, and personal development.",
   image = new URL("/opengraph-image.jpg", Astro.site).toString(),
   imageAlt,
   noindex,
@@ -24,13 +24,13 @@ const {
   url = Astro.url,
 } = Astro.props;
 
-const ogImageAlt = "Fork it! Community";
-const titleDefault = "Fork it! Community | Global Developer Community";
+const ogImageAlt = "Rotaract Agadir Atlantique";
+const titleDefault = "Rotaract Agadir Atlantique";
 ---
 
 <SEO
   title={title ?? ""}
-  titleTemplate="%s | Fork it! Community"
+  titleTemplate="%s | Rotaract Agadir Atlantique"
   titleDefault={titleDefault}
   description={description ?? ""}
   noindex={noindex ?? false}

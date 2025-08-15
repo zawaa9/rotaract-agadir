@@ -1,4 +1,6 @@
-# ↗️ Fork it! Community - Website
+# Rotaract Agadir Atlantique Website
+
+this is the website for the Rotaract Agadir Atlantique club. It is based on [Forkit! Community website](https://github.com/Fork-It-Community/forkit.community).
 
 ## Installation
 

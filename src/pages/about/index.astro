@@ -9,19 +9,16 @@ import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import Prose from "@/components/Prose/index.astro";
 import { getEntries } from "astro:content";
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
 const organizers = (
-  await getCollection(
-    "people",
-    (people) => people.data.forkit?.role === "founder",
-  )
+  await getCollection("people", (people) => people.data.isBoardMember === true)
 ).map((person) => ({
   ...person,
   data: {
     ...person.data,
-    avatar: person.data.forkit?.avatar ?? person.data.avatar,
+    avatar: person.data.avatar,
     // We basically just want names and socials at the moment
-    company: undefined,
     job: undefined,
   },
 }));
@@ -38,25 +35,61 @@ const partners = await getEntries<"partners">(
   <SEO
     slot="seo"
     title="About"
-    description="Discover the origins of the community"
+    description="Learn about Rotaract Agadir Atlantique, a youth-led service club in Agadir, Morocco, part of Rotaract District 9010."
   />
   <div class="mx-auto w-full max-w-screen-sm px-4">
     <MainPageTitle
-      title="About Fork it!"
-      subtitle="Discover the origins of the community"
+      title="About Rotaract Agadir Atlantique"
+      subtitle="Who we are and what we do"
     />
+
+    <!-- Logos Section -->
+    <div class="flex items-center justify-center gap-8 py-8">
+      <div class="flex flex-col items-center gap-2">
+        <Image
+          src="/logo-white.png"
+          alt="Rotaract Agadir Atlantique Logo"
+          width={500}
+          height={500}
+          class="rounded-lg"
+        />
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <Image
+          src="/rac-district.png"
+          alt="Rotaract District 9010 Logo"
+          width={500}
+          height={500}
+          class="rounded-lg"
+        />
+      </div>
+    </div>
+
     <div class="flex flex-col gap-24">
       <Prose>
         <p>
-          Fork it! is a global tech community where real people share real-life
-          experiences. We believe in honest conversations, genuine feedback, and
-          learning from each other’s successes and challenges.
+          Rotaract Agadir Atlantique is a youth-led service club bringing
+          together students and young professionals to create positive impact in
+          Agadir and beyond. As part of <strong>Rotaract District 9010</strong>,
+          we are connected to a larger network of Rotaract clubs across Morocco
+          and North Africa, sharing resources, best practices, and collaborative
+          opportunities.
         </p>
 
         <p>
-          We focus on real projects and authentic stories. No fluff, no hype.
-          It’s a space to connect, collaborate, and keep it real in the world of
-          tech.
+          We focus on service, leadership, and personal development, working
+          closely with our district partners to amplify our impact and reach
+          more communities. Our membership in District 9010 enables us to
+          participate in district-wide initiatives, leadership training
+          programs, and international exchange opportunities.
+        </p>
+
+        <p>
+          We design and run projects in health awareness, education,
+          environment, and social support, while building leadership and
+          teamwork skills among members. Through our district affiliation, we
+          also contribute to and benefit from regional service projects and
+          youth development programs.
         </p>
       </Prose>
 
@@ -67,7 +100,7 @@ const partners = await getEntries<"partners">(
               id="organizers"
               class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
             >
-              Organizers
+              Board
             </h2>
 
             <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-4">
@@ -82,39 +115,33 @@ const partners = await getEntries<"partners">(
       <section>
         <Prose>
           <p>
-            Conferences should be about sharing knowledge, learning from each
-            other, and building community—not about selling products. We believe
-            in fostering authentic connections and offering spaces where
-            developers and tech enthusiasts can come together to exchange ideas,
-            collaborate, and grow.
+            As Rotaract members, we believe in the power of service above self,
+            integrity, inclusivity, and collaboration. We aim to make our
+            initiatives accessible and impactful for our local community while
+            contributing to the broader goals of District 9010.
           </p>
 
           <p>
-            We organize a variety of <a href="/events">events</a> and content to
-            engage the community, including <strong>meetups</strong>,
-            multi-track <strong>conferences</strong>, hands-on <strong
-              >hackathons</strong
-            >, and <strong>off-trail gatherings</strong> in unique locations. We
-            also produce <a href="/podcasts"><strong>podcasts</strong></a> featuring
-            insightful conversations with industry experts, with more formats to
-            come as we continue to grow and evolve. Each initiative is designed to
-            promote learning, collaboration, and creativity.
+            We organize a variety of <a href="/events">initiatives</a> to engage
+            the community, including <strong>awareness campaigns</strong>,
+            <strong>charity actions</strong>, <strong>training workshops</strong
+            >, and <strong>international exchanges</strong>. Each initiative is
+            designed to promote service, collaboration, and leadership, often in
+            partnership with other clubs in our district.
           </p>
 
           <p>
-            Our values are simple: no marketing-driven talks, no unnecessary
-            distractions—just real conversations and learning. We’re committed
-            to inclusivity, offering live translations to support non-English
-            speakers, and keeping ticket prices low or free to ensure
-            accessibility for all.
+            Our values are simple: service above self, integrity, inclusivity,
+            and collaboration. We aim to make initiatives accessible and
+            impactful for our local community while building bridges with other
+            Rotaract clubs across District 9010.
           </p>
 
           <p>
-            Run by developers with real-world experience in event organization,
-            we aim to create spaces where knowledge flows freely, and everyone
-            feels welcome. Whether it’s a local meetup, a global conference, or
-            engaging content online, we invite you to join us in building a
-            community where learning comes first.
+            Run by motivated members, we aim to create spaces where everyone can
+            contribute, learn, and grow. Whether it’s a local campaign, a
+            cross-club exchange, or community support, we invite you to join us
+            in creating positive impact both locally and across our district.
           </p></Prose
         >
       </section>

@@ -118,8 +118,17 @@ export async function generateImageResponseSVG(svg: string) {
   });
 }
 
-export async function generateImageResponseJPG(jpg: Buffer) {
-  return new Response(jpg, {
+export async function generateImageResponseJPG(jpg: ArrayBuffer | Uint8Array) {
+  const toArrayBuffer = (input: ArrayBuffer | Uint8Array): ArrayBuffer => {
+    if (input instanceof ArrayBuffer) return input;
+    const ab = new ArrayBuffer(input.byteLength);
+    new Uint8Array(ab).set(input);
+    return ab;
+  };
+
+  const blob = new Blob([toArrayBuffer(jpg)], { type: "image/jpeg" });
+
+  return new Response(blob, {
     headers: {
       "Content-Type": "image/jpeg",
     },

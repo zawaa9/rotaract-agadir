@@ -1,7 +1,7 @@
 export const getSiteUrl = () => {
   const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://www.forkit.community";
+    : "https://rotaractagadir.com";
 
   const branchUrl = process.env.VERCEL_BRANCH_URL
     ? `https://${process.env.VERCEL_BRANCH_URL}`
