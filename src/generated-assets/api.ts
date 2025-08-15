@@ -45,7 +45,7 @@ export const apiImageEndpoint: (modules: Record<string, unknown>) => APIRoute =
 
       if (params.__type === "jpg") {
         const jpg = await JPG(component, config);
-        return generateImageResponseJPG(jpg);
+        return generateImageResponseJPG(jpg as unknown as Uint8Array);
       }
 
       if (params.__type === "svg") {

@@ -1,5 +1,4 @@
 ---
-import Analytics from "@vercel/analytics/astro";
 import "@fontsource/tomorrow/400.css";
 import "@fontsource/tomorrow/500.css";
 import "@fontsource-variable/inter";
@@ -34,6 +33,5 @@ import { Toaster } from "@/components/ui/sonner";
     <EnvHint />
     <slot />
     <Toaster client:load position="top-center" />
-    <Analytics />
   </body>
 </html>

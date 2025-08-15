@@ -5,7 +5,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
 
-import vercel from "@astrojs/vercel";
+import cloudflare from "@astrojs/cloudflare";
 import { getSiteUrl } from "./src/lib/getSiteURL";
 
 // https://astro.build/config
@@ -40,5 +40,5 @@ export default defineConfig({
     robotsTxt(),
   ],
 
-  adapter: vercel({ isr: true }),
+  adapter: cloudflare(),
 });
