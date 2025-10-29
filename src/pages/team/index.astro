@@ -10,9 +10,52 @@ import JoinTheCommunity from "@/components/JoinTheCommunity/index.astro";
 import { getCollection, getEntries } from "astro:content";
 import TiltedCard from "@/components/TiltedCard";
 
-const people = (await getCollection("people")).sort((a, b) =>
-  a.data.name.localeCompare(b.data.name),
-);
+const ROLE_ORDER = [
+  "founder",
+  "president",
+  "vice-president",
+  "secretary",
+  "membership chair",
+  "sergeant at arms",
+  "counselor",
+  "cheffe effectif",
+  "member",
+];
+
+const normalizeRole = (role?: string) => {
+  if (!role) return undefined;
+  const r = role.toLowerCase().trim();
+  if (r.includes("founder")) return "founder";
+  if (r.includes("vice-president") || r.includes("vice president"))
+    return "vice-president";
+  if (r.includes("president")) return "president"; // only reaches if not vice
+  if (r.includes("secretary")) return "secretary";
+  if (r.includes("membership chair")) return "membership chair";
+  if (r.includes("chief of staff")) return "chief of staff";
+  if (r.includes("sergeant at arms")) return "sergeant at arms";
+  if (r.includes("counselor")) return "counselor";
+  if (r.includes("member")) return "member";
+  return undefined;
+};
+
+const getRoleRank = (role?: string) => {
+  const cat = normalizeRole(role);
+  if (!cat) return Number.POSITIVE_INFINITY;
+  const idx = ROLE_ORDER.indexOf(cat);
+  return idx === -1 ? ROLE_ORDER.length + 1 : idx;
+};
+
+const people = (await getCollection("people")).sort((a, b) => {
+  const rankA = getRoleRank(a.data.clubRole);
+  const rankB = getRoleRank(b.data.clubRole);
+  if (rankA !== rankB) return rankA - rankB;
+
+  const boardA = a.data.isBoardMember ? 0 : 1;
+  const boardB = b.data.isBoardMember ? 0 : 1;
+  if (boardA !== boardB) return boardA - boardB;
+
+  return a.data.name.localeCompare(b.data.name);
+});
 
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({

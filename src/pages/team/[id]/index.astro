@@ -50,14 +50,13 @@ const { Content } = await render(person);
         <section
           class="flex w-full flex-[0.5] flex-col items-center gap-4 px-4 md:sticky md:top-24 md:items-start md:self-start"
         >
-          <div
-            class="aspect-square size-56 flex-none overflow-hidden rounded-lg"
-          >
+          <div class="aspect-square size-56 flex-none rounded-lg">
             <Image
               src={person.data.avatar ?? defaultPerson}
               alt={`${person.data.name} profile picture`}
               width={300}
               height={300}
+              class="h-full w-full object-contain"
             />
           </div>
           <div class="flex flex-col gap-2 text-center md:text-left">

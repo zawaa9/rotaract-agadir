@@ -11,7 +11,7 @@ import { getEntries } from "astro:content";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
-const organizers = (
+const boardMembers = (
   await getCollection("people", (people) => people.data.isBoardMember === true)
 ).map((person) => ({
   ...person,
@@ -94,18 +94,18 @@ const partners = await getEntries<"partners">(
       </Prose>
 
       {
-        !!organizers.length && (
+        !!boardMembers.length && (
           <div class="flex flex-col gap-8">
             <h2
-              id="organizers"
+              id="board-members"
               class="scroll-mt-32 font-heading text-2xl font-medium uppercase tracking-widest"
             >
               Board
             </h2>
 
             <div class="grid grid-cols-2 gap-x-4 gap-y-6 xs:grid-cols-4">
-              {organizers.map((organizer) => (
-                <People people={organizer} />
+              {boardMembers.map((boardMember) => (
+                <People people={boardMember} />
               ))}
             </div>
           </div>
