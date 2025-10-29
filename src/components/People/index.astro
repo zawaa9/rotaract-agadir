@@ -14,7 +14,7 @@ const { people } = Astro.props;
   class="group flex h-fit w-fit flex-col items-start gap-2"
   href={`/team/${people.id}`}
 >
-  <div class="aspect-square rounded-lg">
+  <div class="aspect-square overflow-hidden rounded-lg">
     <Image
       src={people.data.avatar ?? SpeakerPlaceholder}
       alt={people.data.name}

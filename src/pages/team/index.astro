@@ -28,7 +28,7 @@ const normalizeRole = (role?: string) => {
   if (r.includes("founder")) return "founder";
   if (r.includes("vice-president") || r.includes("vice president"))
     return "vice-president";
-  if (r.includes("president")) return "president"; // only reaches if not vice
+  if (r.includes("president")) return "president";
   if (r.includes("secretary")) return "secretary";
   if (r.includes("membership chair")) return "membership chair";
   if (r.includes("chief of staff")) return "chief of staff";

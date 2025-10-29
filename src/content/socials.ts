@@ -2,7 +2,12 @@ import { IconRotary } from "@/components/CustomIcons/IconRotary";
 import { IconDirIddik } from "@/components/CustomIcons/IconDirIddik";
 import type { SocialType } from "@/schemas/utils";
 import type { FC } from "react";
-import { FaEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa6";
+import {
+  FaEnvelope,
+  FaInstagram,
+  FaLinkedin,
+  FaXTwitter,
+} from "react-icons/fa6";
 
 type SocialsLevel = "primary" | "secondary";
 
@@ -52,9 +57,9 @@ export function getSocialsItems(level?: SocialsLevel) {
 export const SOCIALS_TYPE_MAP = {
   instagram: FaInstagram,
   linkedin: FaLinkedin,
+  x: FaXTwitter,
   // Keep other mappings available for existing content types
   // without rendering them in the site-wide socials list.
-  x: (() => null) as unknown as FC,
   github: (() => null) as unknown as FC,
   bluesky: (() => null) as unknown as FC,
   facebook: (() => null) as unknown as FC,
