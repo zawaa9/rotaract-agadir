@@ -11,17 +11,52 @@ import { getEntries } from "astro:content";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
+const ROLE_ORDER = [
+  "president",
+  "ipp",
+  "vice-president",
+  "secretary",
+  "sergeant at arms",
+];
+
+const normalizeRole = (role?: string) => {
+  if (!role) return undefined;
+  const r = role.toLowerCase().trim();
+  if (r.includes("immediate past president") || r.includes("ipp")) return "ipp";
+  if (r.includes("vice-president") || r.includes("vice president"))
+    return "vice-president";
+  if (r.includes("president")) return "president";
+  if (r.includes("secretary")) return "secretary";
+  if (r.includes("sergeant at arms") || r.includes("sergent at arms"))
+    return "sergeant at arms";
+  return undefined;
+};
+
+const getRoleRank = (role?: string) => {
+  const cat = normalizeRole(role);
+  if (!cat) return Number.POSITIVE_INFINITY;
+  const idx = ROLE_ORDER.indexOf(cat);
+  return idx === -1 ? ROLE_ORDER.length + 1 : idx;
+};
+
 const boardMembers = (
   await getCollection("people", (people) => people.data.isBoardMember === true)
-).map((person) => ({
-  ...person,
-  data: {
-    ...person.data,
-    avatar: person.data.avatar,
-    // We basically just want names and socials at the moment
-    job: undefined,
-  },
-}));
+)
+  .map((person) => ({
+    ...person,
+    data: {
+      ...person.data,
+      avatar: person.data.avatar,
+      // We basically just want names and socials at the moment
+      job: undefined,
+    },
+  }))
+  .sort((a, b) => {
+    const rankA = getRoleRank(a.data.clubRole);
+    const rankB = getRoleRank(b.data.clubRole);
+    if (rankA !== rankB) return rankA - rankB;
+    return a.data.name.localeCompare(b.data.name);
+  });
 
 const partners = await getEntries<"partners">(
   (HOME_CONFIG.partners ?? []).map((partner) => ({
